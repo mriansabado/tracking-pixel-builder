@@ -2,8 +2,8 @@
 <div id="main" class="container">
    <div class="columns">
        <div class="column is-full max-col-width">
+    <!-- Traffic and Pixel ID -->
             <div class="box">
-<!-- Traffic and Pixel ID -->
                 <div>
                     <label class="label">Traffic</label>
                     <div class="control">
