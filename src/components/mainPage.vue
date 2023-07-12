@@ -1,7 +1,7 @@
 <template>
 <div id="main" class="container">
    <div class="columns">
-       <div class="column is-full">
+       <div class="column is-full max-col-width">
             <div class="box">
 <!-- Traffic and Pixel ID -->
                 <div>
@@ -44,19 +44,15 @@
                                         <option v-if="traffic == 'Facebook'" value="Purchase">Purchase</option>
                                         <option v-if="traffic == 'Facebook'" value="Search">Search</option>
                                         <option v-if="traffic == 'Facebook'" value="ViewContent">View Content</option>
-
-                                         <option v-if="traffic == 'Tiktok'" value="AddToCart">Add To Cart</option>
-                                         <option v-if="traffic == 'Tiktok'" value="AddPaymentInfo">Add Payment Info</option>
-                                         <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
-                                         <option v-if="traffic == 'Tiktok'" value="ClickButton">Click Button</option>
-                                         <option v-if="traffic == 'Tiktok'" value="CompletePayment">Complete Payment</option>
-                                         <option v-if="traffic == 'Tiktok'" value="'CompleteRegistration'">Complete Registration</option> 
-                                         <option v-if="traffic == 'Tiktok'" value="InitiateCheckout">Initiate Checkout</option>
-                                         <option v-if="traffic == 'Tiktok'" value="ViewContent">View Content</option>
-                                         <option v-if="traffic == 'Tiktok'" value="Search">Search</option>
-                                       
-                                       
-                                       
+                                        <option v-if="traffic == 'Tiktok'" value="AddToCart">Add To Cart</option>
+                                        <option v-if="traffic == 'Tiktok'" value="AddPaymentInfo">Add Payment Info</option>
+                                        <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
+                                        <option v-if="traffic == 'Tiktok'" value="ClickButton">Click Button</option>
+                                        <option v-if="traffic == 'Tiktok'" value="CompletePayment">Complete Payment</option>
+                                        <option v-if="traffic == 'Tiktok'" value="'CompleteRegistration'">Complete Registration</option> 
+                                        <option v-if="traffic == 'Tiktok'" value="InitiateCheckout">Initiate Checkout</option>
+                                        <option v-if="traffic == 'Tiktok'" value="ViewContent">View Content</option>
+                                        <option v-if="traffic == 'Tiktok'" value="Search">Search</option>
                                     </select>
                                 </div>
                             </div>
@@ -88,7 +84,6 @@
                                         <option v-if="traffic == 'Facebook'" value="Purchase">Purchase</option>
                                         <option v-if="traffic == 'Facebook'" value="Search">Search</option>
                                         <option v-if="traffic == 'Facebook'" value="ViewContent">View Content</option>
-
                                         <option v-if="traffic == 'Tiktok'" value="AddToCart">Add To Cart</option>
                                         <option v-if="traffic == 'Tiktok'" value="AddPaymentInfo">Add Payment Info</option>
                                         <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
@@ -129,7 +124,6 @@
                                         <option v-if="traffic == 'Facebook'" value="Purchase">Purchase</option>
                                         <option v-if="traffic == 'Facebook'" value="Search">Search</option>
                                         <option v-if="traffic == 'Facebook'" value="ViewContent">View Content</option>
-
                                         <option v-if="traffic == 'Tiktok'" value="AddToCart">Add To Cart</option>
                                         <option v-if="traffic == 'Tiktok'" value="AddPaymentInfo">Add Payment Info</option>
                                         <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
@@ -152,11 +146,11 @@
                     </div>
                 </div>
                 <hr>
-               <div>
-               <div class="container has-text-right">
-                    <button class="button is-success" @click="this.fireAll">Make Pixel</button>
-                    <button class="button is-danger ml-5" @click="this.reset">Reset</button>
-               </div>
+                <div>
+                    <div class="container has-text-right">
+                        <button class="button is-success" @click="this.fireAll">Make Pixel</button>
+                        <button class="button is-danger ml-5" @click="this.reset">Reset</button>
+                    </div>
                 </div>
             </div>
             <div class="box">
@@ -203,12 +197,12 @@
                 <hr>
                     <div class="buttons is-right">
                         <button @click="this.fireAdClickOnly" class="button is-success">Make Pixel</button>
-                         <button class="button is-danger  ml-5" @click="this.reset">Reset</button>
+                        <button class="button is-danger  ml-5" @click="this.reset">Reset</button>
                     </div>
             </div>
        </div>
 <!-- Results Area -->
-        <div class="column is-full">
+        <div class="column is-full max-col-width">
             <div class="field">
                 <div class="control">
                     <div class="textarea is-large landrTextArea">
@@ -259,7 +253,6 @@
                         {{ fbAdclickResult }}
                         </div>
                     
-                      
                         <div v-if="placementAdclickOnly && traffic == 'Facebook'" class="pixel-text">
                             {{ fbAdclickOnlyResult }}
                         </div>
@@ -290,7 +283,7 @@
             <div class="box map-box">
                 <div class="columns">
                     <div class="column">
-                         <input type="checkbox" v-model="this.postback">
+                        <input type="checkbox" v-model="this.postback">
                         <label class="label is-inline ml-3">Make a Postback</label>
                     </div>
                     <div class="is-flex">
@@ -302,7 +295,7 @@
                 <input class="input mt-3" type="text" placeholder="insert url" v-model="this.postbackURL">
                 <div class="textarea is-medium mt-2">
                    <div class="pixel-text">
-                         {{ this.postbackResult }}
+                        {{ this.postbackResult }}
                    </div>
                 </div>
             </div>
@@ -439,36 +432,36 @@ export default {
         },
         firePostback() {
             this.postbackResult = `var img = document.createElement("img"); 
-img.src = "${this.postbackURL}";
-img.style.display = 'none';
-document.body.appendChild(img);`
+                img.src = "${this.postbackURL}";
+                img.style.display = 'none';
+                document.body.appendChild(img);`
         },
         // Facebook
         fbLandr() {
             this.fbLandrResult = `!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window,document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
- fbq('init', '${this.pixelID}'); 
-fbq('track', '${this.LandrEvent}');
-`;
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window,document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '${this.pixelID}'); 
+                fbq('track', '${this.LandrEvent}');
+                `;
         },
         fbSerp() {
             this.fbSerpResult = `!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window,document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
- fbq('init', '${this.pixelID}'); 
-fbq('track', '${this.SerpEvent}');
-`;
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window,document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '${this.pixelID}'); 
+                fbq('track', '${this.SerpEvent}');
+                `;
         },
         fbAdclick() {
             this.adClick = true;
@@ -482,21 +475,21 @@ var listener = window.addEventListener("blur", function() {
         },
         fbAdclickOnly() {
             this.fbAdclickOnlyResult = `focus();
-var listener = window.addEventListener("blur", function() {
-  active_element = document.activeElement;
-  if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-    !function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window,document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
- fbq('init', '${this.pixelID}'); 
-fbq('track', '${this.AdclickOnlyEvent}');
-  }
-});`;
+                var listener = window.addEventListener("blur", function() {
+                active_element = document.activeElement;
+                if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+                    !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window,document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '${this.pixelID}'); 
+                fbq('track', '${this.AdclickOnlyEvent}');
+                }
+            });`;
         },
         // Tiktok
         ttLandr() {
@@ -662,6 +655,10 @@ obApi('track', '${this.outbrainAdClickOnlyEvent}');
     width: 20px;
 }
 
+.textarea {
+    overflow: auto;
+}
+
 .landrTextArea {
     height: 231px;
     width: 130px;
@@ -682,7 +679,7 @@ obApi('track', '${this.outbrainAdClickOnlyEvent}');
     font-size: medium;
 }
 
-.map-box {
-    max-width: 570px;
+.max-col-width {
+    max-width: 600px;
 }
 </style>
