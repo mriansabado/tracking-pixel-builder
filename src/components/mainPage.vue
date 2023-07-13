@@ -52,7 +52,7 @@
                                         <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
                                         <option v-if="traffic == 'Tiktok'" value="ClickButton">Click Button</option>
                                         <option v-if="traffic == 'Tiktok'" value="CompletePayment">Complete Payment</option>
-                                        <option v-if="traffic == 'Tiktok'" value="'CompleteRegistration'">Complete Registration</option> 
+                                        <option v-if="traffic == 'Tiktok'" value="CompleteRegistration">Complete Registration</option> 
                                         <option v-if="traffic == 'Tiktok'" value="InitiateCheckout">Initiate Checkout</option>
                                         <option v-if="traffic == 'Tiktok'" value="ViewContent">View Content</option>
                                         <option v-if="traffic == 'Tiktok'" value="Search">Search</option>
@@ -92,7 +92,7 @@
                                         <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
                                         <option v-if="traffic == 'Tiktok'" value="ClickButton">Click Button</option>
                                         <option v-if="traffic == 'Tiktok'" value="CompletePayment">Complete Payment</option>
-                                        <option v-if="traffic == 'Tiktok'" value="'CompleteRegistration'">Complete Registration</option> 
+                                        <option v-if="traffic == 'Tiktok'" value="CompleteRegistration">Complete Registration</option> 
                                         <option v-if="traffic == 'Tiktok'" value="InitiateCheckout">Initiate Checkout</option>
                                         <option v-if="traffic == 'Tiktok'" value="ViewContent">View Content</option>
                                         <option v-if="traffic == 'Tiktok'" value="Search">Search</option>
@@ -132,7 +132,7 @@
                                         <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
                                         <option v-if="traffic == 'Tiktok'" value="ClickButton">Click Button</option>
                                         <option v-if="traffic == 'Tiktok'" value="CompletePayment">Complete Payment</option>
-                                        <option v-if="traffic == 'Tiktok'" value="'CompleteRegistration'">Complete Registration</option> 
+                                        <option v-if="traffic == 'Tiktok'" value="CompleteRegistration">Complete Registration</option> 
                                         <option v-if="traffic == 'Tiktok'" value="InitiateCheckout">Initiate Checkout</option>
                                         <option v-if="traffic == 'Tiktok'" value="ViewContent">View Content</option>
                                         <option v-if="traffic == 'Tiktok'" value="Search">Search</option>
@@ -262,7 +262,7 @@
                                                 <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
                                                 <option v-if="traffic == 'Tiktok'" value="ClickButton">Click Button</option>
                                                 <option v-if="traffic == 'Tiktok'" value="CompletePayment">Complete Payment</option>
-                                                <option v-if="traffic == 'Tiktok'" value="'CompleteRegistration'">Complete Registration</option> 
+                                                <option v-if="traffic == 'Tiktok'" value="CompleteRegistration">Complete Registration</option> 
                                                 <option v-if="traffic == 'Tiktok'" value="InitiateCheckout">Initiate Checkout</option>
                                                 <option v-if="traffic == 'Tiktok'" value="ViewContent">View Content</option>
                                                 <option v-if="traffic == 'Tiktok'" value="Search">Search</option>
@@ -472,12 +472,12 @@ export default {
         fbAdclick() {
             this.adClick = true;
             this.fbAdclickResult = `focus();
-var listener = window.addEventListener("blur", function() {
-  active_element = document.activeElement;
-  if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-    fbq('track', '${this.AdclickEvent}');
-  }
-});`;
+            var listener = window.addEventListener("blur", function() {
+            active_element = document.activeElement;
+            if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+            fbq('track', '${this.AdclickEvent}');
+            }
+            });`;
         },
         fbAdclickOnly() {
             this.fbAdclickOnlyResult = `focus();
