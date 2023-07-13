@@ -4,6 +4,9 @@
        <div class="column is-full max-col-width">
     <!-- Traffic and Pixel ID -->
             <div class="box">
+                <label class="label">Crossroads Pixel Builder</label>
+            </div>
+            <div class="box">
                 <div>
                     <label class="label">Traffic</label>
                     <div class="control">
@@ -23,10 +26,10 @@
                     <input class="input" v-model="pixelID" type="text">
                     <span class="ml-2 has-text-danger" v-if="warningPixelID">! Enter a Pixel ID</span>
                 </div>
-            </div>
+            
 <!-- Pixel Events -->
-            <div class="box">
-                <div>
+                <hr>
+                <div class="mt-5">
                     <input v-model="placementLandr" type="checkbox">
                     <label class="is-inline ml-3 label">Lander</label>
                     <div class="column">
@@ -153,53 +156,7 @@
                     </div>
                 </div>
             </div>
-            <div class="box">
-                <div>
-                    <input v-model="placementAdclickOnly" type="checkbox">
-                    <label class="label is-inline ml-3">Ad Click Only</label>
-                   <div class="column">
-                            <div v-if="traffic == 'Facebook' || traffic == 'Tiktok'">
-                                <div class="control">
-                                    <div class="select">
-                                        <select v-model="AdclickOnlyEvent">
-                                            <option value="">None</option>
-                                            <option v-if="traffic == 'Facebook'" value="'AddPaymentInfo'">Add Payment Info</option>
-                                            <option v-if="traffic == 'Facebook'" value="AddToCart">Add To Cart</option>
-                                            <option v-if="traffic == 'Facebook'" value="CompleteRegistration">Complete Registration</option>
-                                            <option v-if="traffic == 'Facebook'" value="InitiateCheckout">Initiate Checkout</option>
-                                            <option v-if="traffic == 'Facebook'" value="Lead">Lead</option>
-                                            <option v-if="traffic == 'Facebook'" value="PageView">Page View</option>
-                                            <option v-if="traffic == 'Facebook'" value="Purchase">Purchase</option>
-                                            <option v-if="traffic == 'Facebook'" value="Search">Search</option>
-                                            <option v-if="traffic == 'Facebook'" value="ViewContent">View Content</option>
-
-                                            <option v-if="traffic == 'Tiktok'" value="AddToCart">Add To Cart</option>
-                                            <option v-if="traffic == 'Tiktok'" value="AddPaymentInfo">Add Payment Info</option>
-                                            <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
-                                            <option v-if="traffic == 'Tiktok'" value="ClickButton">Click Button</option>
-                                            <option v-if="traffic == 'Tiktok'" value="CompletePayment">Complete Payment</option>
-                                            <option v-if="traffic == 'Tiktok'" value="'CompleteRegistration'">Complete Registration</option> 
-                                            <option v-if="traffic == 'Tiktok'" value="InitiateCheckout">Initiate Checkout</option>
-                                            <option v-if="traffic == 'Tiktok'" value="ViewContent">View Content</option>
-                                            <option v-if="traffic == 'Tiktok'" value="Search">Search</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        <div v-if="traffic == 'Taboola'">
-                            <input class="input" type="text" placeholder="input Taboola event..." v-model="taboolaAdclickOnlyEvent">
-                        </div>
-                        <div v-if="traffic == 'Outbrain'">
-                            <input class="input" type="text" placeholder="input Outbrain event..." v-model="outbrainAdClickOnlyEvent">
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                    <div class="buttons is-right">
-                        <button @click="this.fireAdClickOnly" class="button is-success">Make Pixel</button>
-                        <button class="button is-danger  ml-5" @click="this.reset">Reset</button>
-                    </div>
-            </div>
+           
        </div>
 <!-- Results Area -->
         <div class="column is-full max-col-width">
@@ -279,32 +236,67 @@
                 </div>
             </div>
             <hr>
-<!-- Make a Postback -->
-            <div class="box map-box">
-                <div class="columns">
-                    <div class="column">
-                        <input type="checkbox" v-model="this.postback">
-                        <label class="label is-inline ml-3">Make a Postback</label>
+<!-- AdClick Only -->
+             <div class="box">
+                    <div>
+                        <input v-model="placementAdclickOnly" type="checkbox">
+                        <label class="label is-inline ml-3">Ad Click Only</label>
+                       <div class="column">
+                                <div v-if="traffic == 'Facebook' || traffic == 'Tiktok'">
+                                    <div class="control">
+                                        <div class="select">
+                                            <select v-model="AdclickOnlyEvent">
+                                                <option value="">None</option>
+                                                <option v-if="traffic == 'Facebook'" value="'AddPaymentInfo'">Add Payment Info</option>
+                                                <option v-if="traffic == 'Facebook'" value="AddToCart">Add To Cart</option>
+                                                <option v-if="traffic == 'Facebook'" value="CompleteRegistration">Complete Registration</option>
+                                                <option v-if="traffic == 'Facebook'" value="InitiateCheckout">Initiate Checkout</option>
+                                                <option v-if="traffic == 'Facebook'" value="Lead">Lead</option>
+                                                <option v-if="traffic == 'Facebook'" value="PageView">Page View</option>
+                                                <option v-if="traffic == 'Facebook'" value="Purchase">Purchase</option>
+                                                <option v-if="traffic == 'Facebook'" value="Search">Search</option>
+                                                <option v-if="traffic == 'Facebook'" value="ViewContent">View Content</option>
+
+                                                <option v-if="traffic == 'Tiktok'" value="AddToCart">Add To Cart</option>
+                                                <option v-if="traffic == 'Tiktok'" value="AddPaymentInfo">Add Payment Info</option>
+                                                <option v-if="traffic == 'Tiktok'" value="AddToWishlist">Add To Wishlist</option>
+                                                <option v-if="traffic == 'Tiktok'" value="ClickButton">Click Button</option>
+                                                <option v-if="traffic == 'Tiktok'" value="CompletePayment">Complete Payment</option>
+                                                <option v-if="traffic == 'Tiktok'" value="'CompleteRegistration'">Complete Registration</option> 
+                                                <option v-if="traffic == 'Tiktok'" value="InitiateCheckout">Initiate Checkout</option>
+                                                <option v-if="traffic == 'Tiktok'" value="ViewContent">View Content</option>
+                                                <option v-if="traffic == 'Tiktok'" value="Search">Search</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div v-if="traffic == 'Taboola'">
+                                <input class="input" type="text" placeholder="input Taboola event..." v-model="taboolaAdclickOnlyEvent">
+                            </div>
+                            <div v-if="traffic == 'Outbrain'">
+                                <input class="input" type="text" placeholder="input Outbrain event..." v-model="outbrainAdClickOnlyEvent">
+                            </div>
+                        </div>
                     </div>
-                    <div class="is-flex">
-                        <button @click="this.firePostback" class="button is-success mr-4 mt-2">Make Postback</button>
-                        <button class="button is-danger mt-2" @click="this.reset">Reset</button>
-                    </div>
+                    <hr>
+                        <div class="buttons is-right">
+                            <button @click="this.fireAdClickOnly" class="button is-success">Make Pixel</button>
+                            <button class="button is-danger  ml-5" @click="this.reset">Reset</button>
+                        </div>
                 </div>
-               
-                <input class="input mt-3" type="text" placeholder="insert url" v-model="this.postbackURL">
-                <div class="textarea is-medium mt-2">
-                   <div class="pixel-text">
-                        {{ this.postbackResult }}
-                   </div>
-                </div>
-            </div>
+           
         </div>
    </div>
 </div>
+
+<!-- Make A Postback Component -->
+<Postback />
+
 </template>
 
 <script>
+import Postback from './postback.vue';
+
 export default {
     data() {
         return {
@@ -364,21 +356,21 @@ export default {
             const text = this.$refs.landrRef.innerText;
             navigator.clipboard.writeText(text)
                 .then(() => {
-                    this.copiedLandr = true;
-                })
+                this.copiedLandr = true;
+            })
                 .catch((error) => {
-                    alert('Failed to copy text ' + error);
-                })
+                alert("Failed to copy text " + error);
+            });
         },
-         copyTextSerp() {
+        copyTextSerp() {
             const text = this.$refs.serpRef.innerText;
             navigator.clipboard.writeText(text)
                 .then(() => {
-                    this.copiedSerp = true;
-                })
+                this.copiedSerp = true;
+            })
                 .catch((error) => {
-                    alert('Failed to copy text ' + error);
-                })
+                alert("Failed to copy text " + error);
+            });
         },
         reset() {
             location.reload();
@@ -386,12 +378,12 @@ export default {
         fireAll() {
             if (!this.traffic) {
                 this.warningTraffic = true;
-                return
+                return;
             }
             else if (!this.pixelID) {
                 this.warningTraffic = false;
                 this.warningPixelID = true;
-                return
+                return;
             }
             else {
                 this.warningTraffic = false;
@@ -413,12 +405,12 @@ export default {
         fireAdClickOnly() {
             if (!this.traffic) {
                 this.warningTraffic = true;
-                return
+                return;
             }
             else if (!this.pixelID) {
                 this.warningTraffic = false;
                 this.warningPixelID = true;
-                return
+                return;
             }
             else {
                 this.warningTraffic = false;
@@ -427,14 +419,7 @@ export default {
                 this.ttAdclickOnly();
                 this.taboolaAdClickOnly();
                 this.outbrainAdclickOnly();
-
             }
-        },
-        firePostback() {
-            this.postbackResult = `var img = document.createElement("img"); 
-                img.src = "${this.postbackURL}";
-                img.style.display = 'none';
-                document.body.appendChild(img);`
         },
         // Facebook
         fbLandr() {
@@ -553,7 +538,7 @@ document.getElementsByTagName('script')[0],
 '//cdn.taboola.com/libtrc/unip/${this.pixelID}/tfa.js',
 'tb_tfa_script');
 _tfa.push({notify: 'event', name: '${this.taboolaLandrEvent}', id: ${this.pixelID}});
-`
+`;
         },
         taboolaSerp() {
             this.taboolaSerpResult = `window._tfa = window._tfa || [];
@@ -567,7 +552,7 @@ document.getElementsByTagName('script')[0],
 '//cdn.taboola.com/libtrc/unip/${this.pixelID}/tfa.js',
 'tb_tfa_script');
 _tfa.push({notify: 'event', name: '${this.taboolaSerpEvent}', id: ${this.pixelID}});
-`
+`;
         },
         taboolaAdClick() {
             this.taboolaAdclickResult = `focus();var listener = window.addEventListener("blur", function() {
@@ -575,7 +560,7 @@ _tfa.push({notify: 'event', name: '${this.taboolaSerpEvent}', id: ${this.pixelID
     if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
     _tfa.push({notify: 'event', name: '${this.taboolaAdclickEvent}', id: ${this.pixelID}});
   }
-});`
+});`;
         },
         taboolaAdClickOnly() {
             this.taboolaAdclickOnlyResult = `
@@ -595,7 +580,7 @@ document.getElementsByTagName('script')[0],
 'tb_tfa_script');
 _tfa.push({notify: 'event', name: '${this.taboolaAdclickOnlyEvent}', id: ${this.pixelID}});
   }
-});`
+});`;
         },
         // Outbrain
         outbrainLandr() {
@@ -605,7 +590,7 @@ if (_window.obApi) {var toArray = function(object) {return Object.prototype.toSt
 var api = _window.obApi = function() {api.dispatch ? api.dispatch.apply(api, arguments) : api.queue.push(arguments);};api.version = '1.1';api.loaded = true;api.marketerId = OB_ADV_ID;api.queue = [];var tag = _document.createElement('script');tag.async = true;tag.src = '//amplify.outbrain.com/cp/obtp.js';tag.type = 'text/javascript';var script = _document.getElementsByTagName('script')[0];script.parentNode.insertBefore(tag, script);}(window, document);
 
 obApi('track', '${this.outbrainLandrEvent}');
-`
+`;
         },
         outbrainSerp() {
             this.outbrainSerpResult = `!function(_window, _document) {
@@ -614,7 +599,7 @@ if (_window.obApi) {var toArray = function(object) {return Object.prototype.toSt
 var api = _window.obApi = function() {api.dispatch ? api.dispatch.apply(api, arguments) : api.queue.push(arguments);};api.version = '1.1';api.loaded = true;api.marketerId = OB_ADV_ID;api.queue = [];var tag = _document.createElement('script');tag.async = true;tag.src = '//amplify.outbrain.com/cp/obtp.js';tag.type = 'text/javascript';var script = _document.getElementsByTagName('script')[0];script.parentNode.insertBefore(tag, script);}(window, document);
 
 obApi('track', '${this.outbrainSerpEvent}');
-`
+`;
         },
         outbrainAdclick() {
             this.outbrainAdclickResult = `focus();
@@ -625,7 +610,7 @@ var listener = window.addEventListener("blur", function() {
   }
 });
 
-`
+`;
         },
         outbrainAdclickOnly() {
             this.outbrainAdclickOnlyResult = `focus();
@@ -640,9 +625,10 @@ var api = _window.obApi = function() {api.dispatch ? api.dispatch.apply(api, arg
 obApi('track', '${this.outbrainAdClickOnlyEvent}');
 
   }
-});`
+});`;
         },
-    }
+    },
+    components: { Postback }
 }
 </script>
 
