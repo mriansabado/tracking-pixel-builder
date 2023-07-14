@@ -37,7 +37,6 @@
                             <div class="control">
                                 <div class="select">
                                     <select v-model="LandrEvent">
-                                        <option value="">None</option>
                                         <option v-if="traffic == 'Facebook'" value="'AddPaymentInfo'">Add Payment Info</option>
                                         <option v-if="traffic == 'Facebook'" value="AddToCart">Add To Cart</option>
                                         <option v-if="traffic == 'Facebook'" value="CompleteRegistration">Complete Registration</option>
@@ -77,7 +76,6 @@
                             <div class="control">
                                 <div class="select">
                                     <select v-model="SerpEvent">
-                                        <option value="">None</option>
                                         <option v-if="traffic == 'Facebook'" value="'AddPaymentInfo'">Add Payment Info</option>
                                         <option v-if="traffic == 'Facebook'" value="AddToCart">Add To Cart</option>
                                         <option v-if="traffic == 'Facebook'" value="CompleteRegistration">Complete Registration</option>
@@ -117,7 +115,6 @@
                             <div class="control">
                                 <div class="select">
                                     <select v-model="AdclickEvent">
-                                        <option value="">None</option>
                                         <option v-if="traffic == 'Facebook'" value="'AddPaymentInfo'">Add Payment Info</option>
                                         <option v-if="traffic == 'Facebook'" value="AddToCart">Add To Cart</option>
                                         <option v-if="traffic == 'Facebook'" value="CompleteRegistration">Complete Registration</option>
@@ -246,7 +243,6 @@
                                     <div class="control">
                                         <div class="select">
                                             <select v-model="AdclickOnlyEvent">
-                                                <option value="">None</option>
                                                 <option v-if="traffic == 'Facebook'" value="'AddPaymentInfo'">Add Payment Info</option>
                                                 <option v-if="traffic == 'Facebook'" value="AddToCart">Add To Cart</option>
                                                 <option v-if="traffic == 'Facebook'" value="CompleteRegistration">Complete Registration</option>
@@ -292,25 +288,31 @@
      <div class="box map-box">
             <div class="columns">
                 <div class="column">
-                    <label class="label is-inline ml-3">Make a Postback</label>
+                    <label class="label is-inline ml-3">Modify a URL</label>
                      <button @click="this.copyPostback" class="is-inline button is-small is-warning is-rounded ml-3">copy</button>
                      <p v-if="this.copiedPostback" class="is-inline has-text-danger is-size-7 ml-3">Text Copied to Clipboard</p>
+                     <div>
+                        <input type="checkbox" class="ml-3" v-model="this.adClickText">
+                        <label class="is-inline ml-1">On AdClick</label>
+                     </div>
+                </div>
+                <div>
                 </div>
                 <div class="is-flex">
                     <button @click="this.firePostback" class="button is-success mr-4 mt-2">Make Postback</button>
                     <button class="button is-danger mt-2" @click="this.reset">Reset</button>
                 </div>
             </div>
-            <input class="input mt-3" type="text" placeholder="insert url" v-model="this.postbackURL">
+            <input class="input" type="text" placeholder="insert url" v-model="this.postbackURL">
             <div class="textarea is-medium mt-2">
-                <div ref="postbackref" class="pixel-text">
+                <div v-if="adClickText" ref="postbackref" class="pixel-text">
+                    {{ this.adClickPostbackResult }}
+                </div>
+                <div v-else ref="postbackref" class="pixel-text">
                     {{ this.postbackResult }}
                 </div>
             </div>
         </div>
-
-<!-- Make A Postback Component -->
-
 </template>
 
 <script>
@@ -354,7 +356,6 @@ export default {
             outbrainAdclickResult: "",
             outbrainAdclickOnlyResult: "",
             adClick: false,
-            adClickText: "--- This is your AdClick Pixel Below 👇🏼 ---",
             placementLandr: false,
             placementSerp: false,
             placementAdclick: false,
@@ -367,8 +368,9 @@ export default {
             copiedLandr: false,
             copiedSerp: false,
             postbackURL: "",
-            postbackResult: "",
-            copiedPostback: false
+            copiedPostback: false,
+            adClickPostback: false,
+            adClickPostbackResult: "",
         };
     },
     methods: {
@@ -653,6 +655,19 @@ obApi('track', '${this.outbrainAdClickOnlyEvent}');
                 img.src = "${this.postbackURL}";
                 img.style.display = 'none';
                 document.body.appendChild(img);`;
+            this.fireAdClickPostback();
+        },
+         fireAdClickPostback() {
+            this.adClickPostbackResult = `focus();
+var listener = window.addEventListener("blur", function() {
+  active_element = document.activeElement;
+  if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+    var img = document.createElement("img"); 
+    	img.src = "${this.postbackURL}";
+        img.style.display = 'none';
+        document.body.appendChild(img);
+  }
+});`;
         },
         copyPostback() {
             const text = this.$refs.postbackref.innerText;
@@ -696,10 +711,6 @@ obApi('track', '${this.outbrainAdClickOnlyEvent}');
 
 .pixel-text {
     font-size: small;
-}
-
-.adClickText {
-    font-size: medium;
 }
 
 .max-col-width {
