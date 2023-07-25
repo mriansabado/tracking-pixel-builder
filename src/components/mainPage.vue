@@ -163,7 +163,7 @@
                     <div>
                         <label class="label is-inline">Lander</label>
                         <button @click="this.copyTextLandr" class="is-inline button is-small is-warning is-rounded ml-3 mt-1">copy</button>
-                        <p v-if="this.copiedLandr" class="is-inline has-text-danger is-size-7 ml-3">Text Copied to Clipboard</p>
+                        <p v-if="this.copiedLandr" class="is-inline has-text-danger is-size-7 ml-3 copied-text">Text Copied to Clipboard</p>
                     </div>
                         <hr>
                         <div ref="landrRef" v-if="traffic == 'Facebook' && placementLandr" class="pixel-text"> 
@@ -186,7 +186,7 @@
                     <div>
                         <label class="label is-inline">Serp</label>
                         <button @click="this.copyTextSerp" class="is-inline button is-small is-warning is-rounded ml-3 mt-1">copy</button>
-                        <p v-if="this.copiedSerp" class="is-inline has-text-danger is-size-7 ml-3">Text Copied to Clipboard</p>
+                        <p v-if="this.copiedSerp" class="is-inline has-text-danger is-size-7 ml-3 copied-text">Text Copied to Clipboard</p>
                     </div>
                      <hr>
                      <div ref="serpRef">
@@ -409,7 +409,7 @@ export default {
                 s.parentNode.insertBefore(t,s)}(window,document,'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '${this.pixelID}'); 
-                fbq('track', '${this.LandrEvent}');
+                fbq('track', '${this.LandrEvent}',{}, {eventID: '{$uuid}'});
                 `;
         },
         fbSerp() {
@@ -422,7 +422,7 @@ export default {
                 s.parentNode.insertBefore(t,s)}(window,document,'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '${this.pixelID}'); 
-                fbq('track', '${this.SerpEvent}');
+                fbq('track', '${this.SerpEvent}',{}, {eventID: '{$uuid}'});
                 `;
         },
         fbAdclick() {
@@ -431,7 +431,7 @@ export default {
             var listener = window.addEventListener("blur", function() {
             active_element = document.activeElement;
             if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-            fbq('track', '${this.AdclickEvent}');
+            fbq('track', '${this.AdclickEvent}',{}, {eventID: '{$uuid}'});
             }
             });`;
         },
@@ -449,7 +449,7 @@ export default {
                 s.parentNode.insertBefore(t,s)}(window,document,'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '${this.pixelID}'); 
-                fbq('track', '${this.AdclickEvent}');
+                fbq('track', '${this.AdclickEvent}',{}, {eventID: '{$uuid}'});
                 }
             });`;
         },
@@ -669,5 +669,10 @@ var listener = window.addEventListener("blur", function() {
 
 .max-col-width {
     max-width: 600px;
+}
+
+.copied-text {
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
 }
 </style>
