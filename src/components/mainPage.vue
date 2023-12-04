@@ -16,6 +16,7 @@
                                 <option value="Tiktok">Tiktok</option>
                                 <option value="Taboola">Taboola</option>
                                 <option value="Outbrain">Outbrain</option>
+                                <option value="GoogleGTM">Google GTM</option>
                             </select>
                         </div>
                     </div>
@@ -64,6 +65,9 @@
                         </div>
                         <div v-if="traffic == 'Outbrain'">
                             <input class="input" type="text" placeholder="input Outbran event..." v-model="outbrainLandrEvent">
+                        </div>
+                        <div v-if="traffic == 'GoogleGTM'">
+                            <input class="input" type="text" placeholder="input GTM Pixel ID" v-model="gtmLanderEvent">
                         </div>
                     </div>
                 </div>
@@ -310,6 +314,14 @@ export default {
             outbrainSerpResult: "",
             outbrainAdclickResult: "",
             outbrainAdclickOnlyResult: "",
+            gtmLanderEvent: "",
+            gtmSerpEvent: "",
+            gtmAdClickEvent: "",
+            gtmAdClickOnlyEvent: "",
+            gtmLandrResult: "",
+            gtmSerpResult: "",
+            gtmAdClickResult: "",
+            gtmAdClickOnlyResult: "",
             adClick: false,
             placementLandr: false,
             placementSerp: false,
@@ -604,6 +616,15 @@ obApi('track', '${this.outbrainAdClickEvent}');
   }
 });`;
         },
+    gtmLander() {
+        this.gtmLandrResult = `$.when(
+  $.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
+  $.Deferred(function( deferred ){
+    $(deferred.resolve);
+  })
+).done(function(){
+  window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-395705606');`
+    },
          firePostback() {
             this.postbackResult = `var img = document.createElement("img"); 
                 img.src = "${this.postbackURL}";
