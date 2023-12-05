@@ -16,7 +16,7 @@
                                 <option value="Tiktok">Tiktok</option>
                                 <option value="Taboola">Taboola</option>
                                 <option value="Outbrain">Outbrain</option>
-                                <option value="GoogleGTM">Google GTM</option>
+                                <!-- <option value="GoogleGTM">Google GTM (Under Development)</option> -->
                             </select>
                         </div>
                     </div>
@@ -108,6 +108,9 @@
                         <div v-if="traffic == 'Outbrain'">
                             <input class="input" type="text" placeholder="input Outbrain event..." v-model="outbrainSerpEvent">
                         </div>
+                        <div v-if="traffic == 'GoogleGTM'">
+                            <input class="input" type="text" placeholder="input GTM Pixel ID" v-model="gtmSerpEvent">
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -146,6 +149,9 @@
                     </div>
                     <div v-if="traffic == 'Outbrain'">
                         <input class="input" type="text" placeholder="input Outbrain event..." v-model="outbrainAdClickEvent">
+                    </div>
+                     <div v-if="traffic == 'GoogleGTM'">
+                        <input class="input" type="text" placeholder="input GTM Pixel ID" v-model="gtmAdClickEvent">
                     </div>
                     </div>
                 </div>
@@ -617,6 +623,15 @@ obApi('track', '${this.outbrainAdClickEvent}');
 });`;
         },
     gtmLander() {
+        this.gtmLandrResult = `$.when(
+  $.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
+  $.Deferred(function( deferred ){
+    $(deferred.resolve);
+  })
+).done(function(){
+  window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-395705606');`
+    },
+    gtmSerp() {
         this.gtmLandrResult = `$.when(
   $.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
   $.Deferred(function( deferred ){
