@@ -155,7 +155,38 @@
                     </div>
                     </div>
                 </div>
+
+
+                  <!-- Check for Estimated CPC -->
+                <div class="is-flex is-justify-content-space-between">
+                    <div>
+                        <label class="is-inline ml-3 label">Add Estimated CPC?</label>
+                        <input type="checkbox" class="ml-3" v-model="enableEstimatedCPC">
+                    </div>
+                </div>
+                 <!-- Add Estimated CPC --> 
+                <div v-if="enableEstimatedCPC">
+                    <div>
+                        <input type="number" class="input" v-model="cpcNumber" placeholder="Enter CPC number" style="width: 200px;">
+                        <div class="control">
+                            <div class="select">
+                                <select v-model="estimatedCPCValue">
+                                    <option value="">Select CPC</option>
+                                    <option :value="`estimatedGoogleCPC_${cpcNumber}`">estimatedGoogleCPC -- Last 3 Days Rolling Average</option>
+                                    <option :value="`estimatedGoogleCPCToday_${cpcNumber}`">estimatedGoogleCPCToday -- Today's Average</option>
+                                    <option :value="`estimatedGoogleCPCYesterday_${cpcNumber}`">estimatedGoogleCPCYesterday -- Yesterday's Average</option>
+                                    <option :value="`estimatedGoogleCPCNow_${cpcNumber}`">estimatedGoogleCPCNow - Last Hour Average</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <hr>
+
+                
+              
+                
+                <!-- End of Estimated CPC -->
                 <div>
                     <div class="container has-text-right">
                         <button class="button is-success" @click="this.fireAll">Make Pixel</button>
@@ -334,7 +365,6 @@ export default {
             placementAdclick: false,
             placementAdclickOnly: false,
             postback: false,
-            postbackURL: "",
             postbackResult: "",
             copiedLandr: false,
             copiedSerp: false,
@@ -342,7 +372,17 @@ export default {
             copiedPostback: false,
             adClickPostback: false,
             adClickPostbackResult: "",
+            adClickText: false,
+            estimatedCPC: false,
+            cpcNumber: 0,
+            estimatedCPCValue: "",
+            enableEstimatedCPC: false,
         };
+    },
+    watch: {
+        cpcNumber(newVal) {
+            console.log(`cpcNumber changed to: ${newVal}`);
+        }
     },
     methods: {
         copyTextLandr() {
@@ -449,7 +489,9 @@ export default {
             var listener = window.addEventListener("blur", function() {
             active_element = document.activeElement;
             if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-            fbq('track', '${this.AdclickEvent}',{}, {eventID: '{$uuid}'});
+            fbq('track', '${this.AdclickEvent}',
+            {value: '${this.estimatedCPCValue}'}, 
+            {eventID: '{$uuid}'});
             }
             });`;
         },
@@ -467,7 +509,9 @@ export default {
                 s.parentNode.insertBefore(t,s)}(window,document,'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '${this.pixelID}'); 
-                fbq('track', '${this.AdclickEvent}',{}, {eventID: '{$uuid}'});
+                fbq('track', '${this.AdclickEvent}',
+                {value: '${this.estimatedCPCValue}'},
+                {eventID: '{$uuid}'});
                 }
             });`;
         },
@@ -622,23 +666,32 @@ obApi('track', '${this.outbrainAdClickEvent}');
   }
 });`;
         },
+        // Google Tag Manager
     gtmLander() {
         this.gtmLandrResult = `$.when(
-  $.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
-  $.Deferred(function( deferred ){
-    $(deferred.resolve);
-  })
-).done(function(){
-  window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-395705606');`
+            $.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
+            $.Deferred(function( deferred ){
+                $(deferred.resolve);
+            })
+        ).done(function(){
+            window.dataLayer = window.dataLayer || []; 
+            function gtag(){dataLayer.push(arguments);} 
+            gtag('js', new Date()); 
+            gtag('config', 'AW-395705606');
+        });`
     },
     gtmSerp() {
-        this.gtmLandrResult = `$.when(
-  $.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
-  $.Deferred(function( deferred ){
-    $(deferred.resolve);
-  })
-).done(function(){
-  window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-395705606');`
+        this.gtmSerpResult = `$.when(
+            $.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
+            $.Deferred(function( deferred ){
+                $(deferred.resolve);
+            })
+        ).done(function(){
+            window.dataLayer = window.dataLayer || []; 
+            function gtag(){dataLayer.push(arguments);} 
+            gtag('js', new Date()); 
+            gtag('config', 'AW-395705606');
+        });`
     },
          firePostback() {
             this.postbackResult = `var img = document.createElement("img"); 
