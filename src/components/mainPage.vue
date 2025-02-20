@@ -165,27 +165,24 @@
                     </div>
                 </div>
                  <!-- Add Estimated CPC --> 
-                <div v-if="enableEstimatedCPC">
-                    <div>
-                        <input type="number" class="input" v-model="cpcNumber" placeholder="Enter CPC number" style="width: 200px;">
-                        <div class="control">
-                            <div class="select">
-                                <select v-model="estimatedCPCValue">
-                                    <option value="">Select CPC</option>
-                                    <option :value="`estimatedGoogleCPC_${cpcNumber}`">estimatedGoogleCPC -- Last 3 Days Rolling Average</option>
-                                    <option :value="`estimatedGoogleCPCToday_${cpcNumber}`">estimatedGoogleCPCToday -- Today's Average</option>
-                                    <option :value="`estimatedGoogleCPCYesterday_${cpcNumber}`">estimatedGoogleCPCYesterday -- Yesterday's Average</option>
-                                    <option :value="`estimatedGoogleCPCNow_${cpcNumber}`">estimatedGoogleCPCNow - Last Hour Average</option>
-                                </select>
-                            </div>
-                        </div>
+                <div v-if="enableEstimatedCPC" class="is-flex is-align-items-center" style="gap: 1rem;">
+                    <input type="number" 
+                           class="input" 
+                           v-model="cpcNumber" 
+                           placeholder="Enter CPC number" 
+                           style="width: 150px; min-width: 120px; max-width: 200px;">
+                    
+                    <div class="select" style="min-width: 300px; max-width: 500px;">
+                        <select v-model="estimatedCPCValue">
+                            <option value="">Select CPC</option>
+                            <option :value="`{$estimatedGoogleCPC_${cpcNumber}}`">estimatedGoogleCPC -- Last 3 Days Rolling Average</option>
+                            <option :value="`{$estimatedGoogleCPCToday_${cpcNumber}}`">estimatedGoogleCPCToday -- Today's Average</option>
+                            <option :value="`{$estimatedGoogleCPCYesterday_${cpcNumber}}`">estimatedGoogleCPCYesterday -- Yesterday's Average</option>
+                            <option :value="`{$estimatedGoogleCPCNow_${cpcNumber}}`">estimatedGoogleCPCNow - Last Hour Average</option>
+                        </select>
                     </div>
                 </div>
                 <hr>
-
-                
-              
-                
                 <!-- End of Estimated CPC -->
                 <div>
                     <div class="container has-text-right">
@@ -456,271 +453,294 @@ export default {
             }
         },
 
-        // Facebook
-        fbLandr() {
-            this.fbLandrResult = `!function(f,b,e,v,n,t,s)
-                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s)}(window,document,'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '${this.pixelID}'); 
-                fbq('track', '${this.LandrEvent}',{}, {eventID: '{$uuid}'});
-                `;
-        },
-        fbSerp() {
-            this.fbSerpResult = `!function(f,b,e,v,n,t,s)
-                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s)}(window,document,'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '${this.pixelID}'); 
-                fbq('track', '${this.SerpEvent}',{}, {eventID: '{$uuid}'});
-                `;
-        },
-        fbAdclick() {
-            this.adClick = true;
-            this.fbAdclickResult = `focus();
-            var listener = window.addEventListener("blur", function() {
-            active_element = document.activeElement;
-            if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-            fbq('track', '${this.AdclickEvent}',
-            {value: '${this.estimatedCPCValue}'}, 
-            {eventID: '{$uuid}'});
-            }
-            });`;
-        },
-        fbAdclickOnly() {
-            this.fbAdclickOnlyResult = `focus();
-                var listener = window.addEventListener("blur", function() {
-                active_element = document.activeElement;
-                if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-                    !function(f,b,e,v,n,t,s)
-                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s)}(window,document,'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '${this.pixelID}'); 
-                fbq('track', '${this.AdclickEvent}',
-                {value: '${this.estimatedCPCValue}'},
-                {eventID: '{$uuid}'});
-                }
-            });`;
-        },
-        // Tiktok
-        ttLandr() {
-            this.ttLandrResult = `!function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var 
-i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
-
-  ttq.load('${this.pixelID}');
-  ttq.track('${this.LandrEvent}');
-  ttq.page();
-}(window, document, 'ttq');
+    // Facebook
+fbLandr() {
+    this.fbLandrResult = `
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${this.pixelID}'); 
+fbq('track', '${this.LandrEvent}',{}, {eventID: '{$uuid}'});
 `;
-        },
-        ttSerp() {
-            this.ttSerpResult = `!function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var 
-i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+    },
 
-  ttq.load('${this.pixelID}');
-  ttq.track('${this.SerpEvent}');
-  ttq.page();
-}(window, document, 'ttq');
+fbSerp() {
+    this.fbSerpResult = `
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${this.pixelID}'); 
+fbq('track', '${this.SerpEvent}',{}, {eventID: '{$uuid}'});
 `;
-        },
-        ttAdclick() {
-            this.ttAdclickResult = `focus();
+    },
+
+fbAdclick() {
+    this.adClick = true;
+    this.fbAdclickResult = `
+focus();
 var listener = window.addEventListener("blur", function() {
-  active_element = document.activeElement;
-  if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-     ttq.track('${this.AdclickEvent}');
-  }
+active_element = document.activeElement;
+if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+fbq('track', '${this.AdclickEvent}',
+{value: '${this.estimatedCPCValue}'}, 
+{eventID: '{$uuid}'});
+}
+});`;
+    },
+
+fbAdclickOnly() {
+    this.fbAdclickOnlyResult = 
+`
+focus();
+var listener = window.addEventListener("blur", function() {
+active_element = document.activeElement;
+if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+    !function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${this.pixelID}'); 
+fbq('track', '${this.AdclickEvent}',
+{value: '${this.estimatedCPCValue}'},
+{eventID: '{$uuid}'});
+}
+});`;
+    },
+// Tiktok
+ttLandr() {
+    this.ttLandrResult = `
+!function (w, d, t) {
+w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],
+ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);
+return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
+ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+
+ttq.load('${this.pixelID}');
+ttq.track('${this.LandrEvent}');
+ttq.page();
+}(window, document, 'ttq');`;
+    },
+
+ttSerp() {
+    this.ttSerpResult = `
+!function (w, d, t) {
+w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],
+ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);
+return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
+ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+ttq.load('${this.pixelID}');
+ttq.track('${this.SerpEvent}');
+ttq.page();
+}(window, document, 'ttq');`;
+    },
+
+ttAdclick() {
+    this.ttAdclickResult = `
+focus();
+var listener = window.addEventListener("blur", function() {
+active_element = document.activeElement;
+if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+    ttq.track('${this.AdclickEvent}');
+    }
 });`;
         },
-        ttAdclickOnly() {
-            this.ttAdclickOnlyResult = `focus();
+
+ttAdclickOnly() {
+    this.ttAdclickOnlyResult = `
+focus();
 var listener = window.addEventListener("blur", function() {
-  active_element = document.activeElement;
-  if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-    !function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var 
+active_element = document.activeElement;
+if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+!function (w, d, t) {
+w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var 
 i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
 
-  ttq.load('${this.pixelID}');
-  ttq.track('${this.AdclickEvent}');
-  ttq.page();
+ttq.load('${this.pixelID}');
+ttq.track('${this.AdclickEvent}');
+ttq.page();
 }(window, document, 'ttq');
 
-  }
+}
 });`;
         },
-        // Taboola
-        taboolaLandr() {
-            this.taboolaLandrResult = `window._tfa = window._tfa || [];
+ // Taboola
+taboolaLandr() {
+    this.taboolaLandrResult = `
+window._tfa = window._tfa || [];
 window._tfa.push({notify: 'event', name: 'page_view', id: ${this.pixelID}});
 !function (t, f, a, x) {
 if (!document.getElementById(x)) {
 t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f);
-}
-}(document.createElement('script'),
+}}(document.createElement('script'),
 document.getElementsByTagName('script')[0],
 '//cdn.taboola.com/libtrc/unip/${this.pixelID}/tfa.js',
 'tb_tfa_script');
 _tfa.push({notify: 'event', name: '${this.taboolaLandrEvent}', id: ${this.pixelID}});
 `;
-        },
-        taboolaSerp() {
-            this.taboolaSerpResult = `window._tfa = window._tfa || [];
+    },
+taboolaSerp() {
+    this.taboolaSerpResult = `
+window._tfa = window._tfa || [];
 window._tfa.push({notify: 'event', name: 'page_view', id: ${this.pixelID}});
 !function (t, f, a, x) {
 if (!document.getElementById(x)) {
 t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f);
-}
-}(document.createElement('script'),
+}}(document.createElement('script'),
 document.getElementsByTagName('script')[0],
 '//cdn.taboola.com/libtrc/unip/${this.pixelID}/tfa.js',
 'tb_tfa_script');
 _tfa.push({notify: 'event', name: '${this.taboolaSerpEvent}', id: ${this.pixelID}});
 `;
-        },
-        taboolaAdClick() {
-            this.taboolaAdclickResult = `focus();var listener = window.addEventListener("blur", function() {
-    active_element = document.activeElement;
-    if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-    _tfa.push({notify: 'event', name: '${this.taboolaAdclickEvent}', id: ${this.pixelID}});
-  }
+    },
+taboolaAdClick() {
+    this.taboolaAdclickResult = `
+focus();var listener = window.addEventListener("blur", function() {
+active_element = document.activeElement;
+if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+_tfa.push({notify: 'event', name: '${this.taboolaAdclickEvent}', id: ${this.pixelID}});
+}
 });`;
-        },
-        taboolaAdClickOnly() {
-            this.taboolaAdclickOnlyResult = `
-            focus();
+    },
+taboolaAdClickOnly() {
+    this.taboolaAdclickOnlyResult = `
+focus();
 var listener = window.addEventListener("blur", function() {
-  active_element = document.activeElement;
-  if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-    window._tfa = window._tfa || [];
+active_element = document.activeElement;
+if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+window._tfa = window._tfa || [];
 window._tfa.push({notify: 'event', name: 'page_view', id: ${this.pixelID}});
 !function (t, f, a, x) {
 if (!document.getElementById(x)) {
 t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f);
-}
-}(document.createElement('script'),
+}}(document.createElement('script'),
 document.getElementsByTagName('script')[0],
 '//cdn.taboola.com/libtrc/unip/${this.pixelID}/tfa.js',
 'tb_tfa_script');
 _tfa.push({notify: 'event', name: '${this.taboolaAdclickEvent}', id: ${this.pixelID}});
-  }
+}
 });`;
-        },
-        // Outbrain
-        outbrainLandr() {
-            this.outbrainLandrResult = `!function(_window, _document) {
-	var OB_ADV_ID='${this.pixelID}';
+    },
+// Outbrain
+outbrainLandr() {
+        this.outbrainLandrResult = `
+!function(_window, _document) {
+var OB_ADV_ID='${this.pixelID}';
 if (_window.obApi) {var toArray = function(object) {return Object.prototype.toString.call(object) === '[object Array]' ? object : [object];};_window.obApi.marketerId = toArray(_window.obApi.marketerId).concat(toArray(OB_ADV_ID));return;}
 var api = _window.obApi = function() {api.dispatch ? api.dispatch.apply(api, arguments) : api.queue.push(arguments);};api.version = '1.1';api.loaded = true;api.marketerId = OB_ADV_ID;api.queue = [];var tag = _document.createElement('script');tag.async = true;tag.src = '//amplify.outbrain.com/cp/obtp.js';tag.type = 'text/javascript';var script = _document.getElementsByTagName('script')[0];script.parentNode.insertBefore(tag, script);}(window, document);
-
 obApi('track', '${this.outbrainLandrEvent}');
 `;
-        },
-        outbrainSerp() {
-            this.outbrainSerpResult = `!function(_window, _document) {
-	var OB_ADV_ID='${this.pixelID}';
+    },
+outbrainSerp() {
+    this.outbrainSerpResult = `
+!function(_window, _document) {
+var OB_ADV_ID='${this.pixelID}';
 if (_window.obApi) {var toArray = function(object) {return Object.prototype.toString.call(object) === '[object Array]' ? object : [object];};_window.obApi.marketerId = toArray(_window.obApi.marketerId).concat(toArray(OB_ADV_ID));return;}
 var api = _window.obApi = function() {api.dispatch ? api.dispatch.apply(api, arguments) : api.queue.push(arguments);};api.version = '1.1';api.loaded = true;api.marketerId = OB_ADV_ID;api.queue = [];var tag = _document.createElement('script');tag.async = true;tag.src = '//amplify.outbrain.com/cp/obtp.js';tag.type = 'text/javascript';var script = _document.getElementsByTagName('script')[0];script.parentNode.insertBefore(tag, script);}(window, document);
-
 obApi('track', '${this.outbrainSerpEvent}');
 `;
-        },
-        outbrainAdclick() {
-            this.outbrainAdclickResult = `focus();
+    },
+outbrainAdclick() {
+    this.outbrainAdclickResult = `
+focus();
 var listener = window.addEventListener("blur", function() {
-  active_element = document.activeElement;
-  if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-    obApi('track', '${this.outbrainAdClickEvent}');
-  }
+active_element = document.activeElement;
+if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+obApi('track', '${this.outbrainAdClickEvent}');
+}
 });
-
 `;
-        },
-        outbrainAdclickOnly() {
-            this.outbrainAdclickOnlyResult = `focus();
+    },
+outbrainAdclickOnly() {
+    this.outbrainAdclickOnlyResult = `
+focus();
 var listener = window.addEventListener("blur", function() {
-  active_element = document.activeElement;
-  if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-    !function(_window, _document) {
-    var OB_ADV_ID='${this.pixelID}';
+active_element = document.activeElement;
+if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+!function(_window, _document) {
+var OB_ADV_ID='${this.pixelID}';
 if (_window.obApi) {var toArray = function(object) {return Object.prototype.toString.call(object) === '[object Array]' ? object : [object];};_window.obApi.marketerId = toArray(_window.obApi.marketerId).concat(toArray(OB_ADV_ID));return;}
 var api = _window.obApi = function() {api.dispatch ? api.dispatch.apply(api, arguments) : api.queue.push(arguments);};api.version = '1.1';api.loaded = true;api.marketerId = OB_ADV_ID;api.queue = [];var tag = _document.createElement('script');tag.async = true;tag.src = '//amplify.outbrain.com/cp/obtp.js';tag.type = 'text/javascript';var script = _document.getElementsByTagName('script')[0];script.parentNode.insertBefore(tag, script);}(window, document);
-
 obApi('track', '${this.outbrainAdClickEvent}');
 
-  }
+}
 });`;
-        },
-        // Google Tag Manager
-    gtmLander() {
-        this.gtmLandrResult = `$.when(
-            $.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
-            $.Deferred(function( deferred ){
-                $(deferred.resolve);
-            })
-        ).done(function(){
-            window.dataLayer = window.dataLayer || []; 
-            function gtag(){dataLayer.push(arguments);} 
-            gtag('js', new Date()); 
-            gtag('config', 'AW-395705606');
-        });`
     },
-    gtmSerp() {
-        this.gtmSerpResult = `$.when(
-            $.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
-            $.Deferred(function( deferred ){
-                $(deferred.resolve);
-            })
-        ).done(function(){
-            window.dataLayer = window.dataLayer || []; 
-            function gtag(){dataLayer.push(arguments);} 
-            gtag('js', new Date()); 
-            gtag('config', 'AW-395705606');
-        });`
+// Google Tag Manager
+gtmLander() {
+this.gtmLandrResult = `
+$.when($.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
+$.Deferred(function( deferred ){
+    $(deferred.resolve);
+})
+).done(function(){
+window.dataLayer = window.dataLayer || []; 
+function gtag(){dataLayer.push(arguments);} 
+gtag('js', new Date()); 
+gtag('config', 'AW-395705606');
+});`
     },
-         firePostback() {
-            this.postbackResult = `var img = document.createElement("img"); 
-                img.src = "${this.postbackURL}";
-                img.style.display = 'none';
-                document.body.appendChild(img);`;
-            this.fireAdClickPostback();
+gtmSerp() {
+        this.gtmSerpResult = `
+$.when($.getScript('https://www.googletagmanager.com/gtag/js?id=AW-395705606'),
+$.Deferred(function( deferred ){
+    $(deferred.resolve);
+})
+).done(function(){
+window.dataLayer = window.dataLayer || []; 
+function gtag(){dataLayer.push(arguments);} 
+gtag('js', new Date()); 
+gtag('config', 'AW-395705606');
+});`
+    },
+firePostback() {
+    this.postbackResult = `
+var img = document.createElement("img"); 
+img.src = "${this.postbackURL}";
+img.style.display = 'none';
+document.body.appendChild(img);`;
+this.fireAdClickPostback();
         },
-         fireAdClickPostback() {
-            this.adClickPostbackResult = `focus();
+fireAdClickPostback() {
+    this.adClickPostbackResult = `
+focus();
 var listener = window.addEventListener("blur", function() {
-  active_element = document.activeElement;
-  if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
-    var img = document.createElement("img"); 
-    	img.src = "${this.postbackURL}";
-        img.style.display = 'none';
-        document.body.appendChild(img);
-  }
+active_element = document.activeElement;
+if ("IFRAME" == active_element.tagName && 1 == window.location.href.includes("caf_results")) {
+var img = document.createElement("img"); 
+img.src = "${this.postbackURL}";
+img.style.display = 'none';
+document.body.appendChild(img);
+}
 });`;
-        },
-        copyPostback() {
-            const text = this.$refs.postbackref.innerText;
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    this.copiedPostback = true;
-                })
-                .catch((error) => {
-                    alert("Failed to copy text " + error);
-                });
+    },
+copyPostback() {
+    const text = this.$refs.postbackref.innerText;
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            this.copiedPostback = true;
+        })
+        .catch((error) => {
+            alert("Failed to copy text " + error);
+        });
         }
     },
     components: {  }
@@ -741,19 +761,21 @@ var listener = window.addEventListener("blur", function() {
 }
 
 .landrTextArea {
-    height: 344px;
+    height: 330px;
     width: 300px;
     overflow: auto;
 }
 
 .serpTextArea {
-    height: 344px;
+    height: 380px;
     width: 300px;
     overflow: auto;
 }
 
 .pixel-text {
     font-size: small;
+    white-space: pre;
+    font-family: monospace;
 }
 
 .max-col-width {
