@@ -158,7 +158,7 @@
 
 
                   <!-- Check for Estimated CPC -->
-                <div class="is-flex is-justify-content-space-between">
+                <div v-if="traffic == 'Facebook'" class="is-flex is-justify-content-space-between">
                     <div>
                         <label class="is-inline ml-3 label">Add Estimated CPC?</label>
                         <input type="checkbox" class="ml-3" v-model="enableEstimatedCPC">
