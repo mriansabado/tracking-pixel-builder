@@ -4,7 +4,7 @@
        <div class="column is-full max-col-width">
     <!-- Traffic and Pixel ID -->
             <div class="box">
-                <label class="label">Crossroads Pixel Builder</label>
+                <label class="label">Pixel Builder</label>
             </div>
             <div class="box">
                 <div>
