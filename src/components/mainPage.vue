@@ -4,7 +4,7 @@
        <div class="column is-full max-col-width">
     <!-- Traffic and Pixel ID -->
             <div class="box">
-                <label class="label">Pixel Builders</label>
+                <label class="label">Pixel Craft - Crafting Pixels for your Ads</label>
             </div>
             <div class="box">
                 <div>
@@ -277,34 +277,7 @@
    </div>
 </div>
 <hr>
-     <div class="box map-box">
-            <div class="columns">
-                <div class="column">
-                    <label class="label is-inline ml-3">Modify a URL</label>
-                     <button @click="this.copyPostback" class="is-inline button is-small is-warning is-rounded ml-3">copy</button>
-                     <p v-if="this.copiedPostback" class="is-inline has-text-danger is-size-7 ml-3">Text Copied to Clipboard</p>
-                     <div>
-                        <input type="checkbox" class="ml-3" v-model="this.adClickText">
-                        <label class="is-inline ml-1">On AdClick</label>
-                     </div>
-                </div>
-                <div>
-                </div>
-                <div class="is-flex">
-                    <button @click="this.firePostback" class="button is-success mr-4 mt-2">Make Postback</button>
-                    <button class="button is-danger mt-2" @click="this.reset">Reset</button>
-                </div>
-            </div>
-            <input class="input" type="text" placeholder="insert url" v-model="this.postbackURL">
-            <div class="textarea is-medium mt-2">
-                <div v-if="adClickText" ref="postbackref" class="pixel-text">
-                    {{ this.adClickPostbackResult }}
-                </div>
-                <div v-else ref="postbackref" class="pixel-text">
-                    {{ this.postbackResult }}
-                </div>
-            </div>
-        </div>
+    
 </template>
 
 <script>
